@@ -1,0 +1,17 @@
+{
+    "logout": {
+        "logoutEndpoint": "/do/logout"
+    },
+    "authenticationMethod": "none",
+    "routes": [
+        {
+            "source": "/srv/(.*)",
+            "destination": "services"
+        },
+        {
+            "source": "/",
+            "target": "/",
+            "localDir": "webapp"
+        }
+    ]
+}

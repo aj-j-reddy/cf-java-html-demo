@@ -1,0 +1,30 @@
+---
+applications:
+  # Application
+  - name: arjun-services
+    instances: 1
+    path: services/target/demo-0.0.1-SNAPSHOT.jar
+    memory: 1024M
+    env:
+      JBP_CONFIG_COMPONENTS: '{ jres: ["com.sap.xs.java.buildpack.jdk.SAPMachineJDK"] }'
+      JBP_CONFIG_SAP_MACHINE_JRE: '{ jre: { version: "11.+" } }'
+    buildpacks:
+      - sap_java_buildpack
+    services:
+      - hana-hdi
+  - name: arjun-ui
+    memory: 256M
+    path: ui
+    buildpacks:
+      - nodejs_buildpack
+    env:
+      destinations: >
+        [
+          {
+            "name" : "services",
+            "url" : "https://arjun-services.cfapps.us10-001.hana.ondemand.com",
+            "forwardAuthToken" : true,
+            "timeout" : 120000
+          }
+        ]
+...
